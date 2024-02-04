@@ -1,6 +1,7 @@
 from unittest import TestCase, TestSuite, TextTestRunner
 
 import hashlib
+from ripemd160 import ripemd160
 
 
 # tag::source1[]
@@ -17,7 +18,8 @@ def run(test):
 # tag::source4[]
 def hash160(s):
     '''sha256 followed by ripemd160'''
-    return hashlib.new('ripemd160', hashlib.sha256(s).digest()).digest()  # <1>
+    return ripemd160(hashlib.sha256(s).digest())
+    # return hashlib.new('ripemd160', hashlib.sha256(s).digest()).digest()  # <1>
 # end::source4[]
 
 
@@ -65,15 +67,13 @@ def decode_base58(s):
 def little_endian_to_int(b):
     '''little_endian_to_int takes byte sequence as a little-endian number.
     Returns an integer'''
-    # use int.from_bytes()
-    raise NotImplementedError
+    return int.from_bytes(b, "little")
 
 
 def int_to_little_endian(n, length):
     '''endian_to_little_endian takes an integer and returns the little-endian
     byte sequence of length'''
-    # use n.to_bytes()
-    raise NotImplementedError
+    return n.to_bytes(length, "little")
 
 
 class HelperTest(TestCase):
